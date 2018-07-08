@@ -1,4 +1,4 @@
-package org.lorinhochstein.lemonade;
+package org.lorinhochstein.lemonademod;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -8,20 +8,20 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
-import org.lorinhochstein.lemonade.proxy.CommonProxy;
+import org.lorinhochstein.lemonademod.proxy.CommonProxy;
 
-import static org.lorinhochstein.lemonade.LemonadeMod.modId;
+import static org.lorinhochstein.lemonademod.LemonadeMod.modId;
 
 @Mod(modid=modId, name="Lemonade Mod", version="1.0")
 public class LemonadeMod {
     private static Logger logger;
 
-    public static final String modId = "lemonade";
+    public static final String modId = "lemonademod";
 
     @Mod.Instance(modId)
     public static LemonadeMod instance;
 
-    @SidedProxy(serverSide="org.lorinhochstein.lemonade.proxy.CommonProxy", clientSide="org.lorinhochstein.lemonade.proxy.ClientProxy")
+    @SidedProxy(serverSide="org.lorinhochstein.lemonademod.proxy.CommonProxy", clientSide="org.lorinhochstein.lemonademod.proxy.ClientProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler

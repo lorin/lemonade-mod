@@ -1,4 +1,4 @@
-package org.lorinhochstein.lemonade.proxy;
+package org.lorinhochstein.lemonademod.proxy;
 
 import net.minecraft.item.Item;
 

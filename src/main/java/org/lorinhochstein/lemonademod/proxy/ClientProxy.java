@@ -1,9 +1,9 @@
-package org.lorinhochstein.lemonade.proxy;
+package org.lorinhochstein.lemonademod.proxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import org.lorinhochstein.lemonade.LemonadeMod;
+import org.lorinhochstein.lemonademod.LemonadeMod;
 
 public class ClientProxy extends CommonProxy {
     @Override

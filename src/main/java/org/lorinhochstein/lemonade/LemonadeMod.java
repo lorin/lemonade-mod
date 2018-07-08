@@ -1,6 +1,5 @@
-package hochstein.org.lemonade;
+package org.lorinhochstein.lemonade;
 
-import hochstein.org.lemonade.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -9,8 +8,9 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
+import org.lorinhochstein.lemonade.proxy.CommonProxy;
 
-import static hochstein.org.lemonade.LemonadeMod.modId;
+import static org.lorinhochstein.lemonade.LemonadeMod.modId;
 
 @Mod(modid=modId, name="Lemonade Mod", version="1.0")
 public class LemonadeMod {

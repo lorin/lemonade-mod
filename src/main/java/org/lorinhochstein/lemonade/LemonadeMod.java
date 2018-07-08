@@ -16,7 +16,7 @@ import static org.lorinhochstein.lemonade.LemonadeMod.modId;
 public class LemonadeMod {
     private static Logger logger;
 
-    static final String modId = "lemonade";
+    public static final String modId = "lemonade";
 
     @Mod.Instance(modId)
     public static LemonadeMod instance;
@@ -35,15 +35,13 @@ public class LemonadeMod {
         @SubscribeEvent
         public static void registerItems(RegistryEvent.Register<Item> event) {
             logger.info("Registering lemonade");
-            event.getRegistry().register(
-                    new Item()
+            Item lemonade = new Item()
                             .setUnlocalizedName("lemonade")
                             .setRegistryName("lemonade")
-                            .setCreativeTab(CreativeTabs.FOOD)
-            );
+                            .setCreativeTab(CreativeTabs.FOOD);
 
-            // TODO: Add the custom model resource location. This is just client-side, so need to either
-            // use the proxy or explicitly check
+            event.getRegistry().register(lemonade);
+            proxy.registerItemRenderer(lemonade, 0, "lemonade");
         }
 
     }

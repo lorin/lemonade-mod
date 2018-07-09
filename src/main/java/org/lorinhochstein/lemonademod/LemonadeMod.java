@@ -12,8 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
 import org.lorinhochstein.lemonademod.item.ItemLemonade;
-import org.lorinhochstein.lemonademod.potion.PotionLemon;
-import org.lorinhochstein.lemonademod.potion.PotionTypeLemonade;
+import org.lorinhochstein.lemonademod.potion.PotionLemonade;
 import org.lorinhochstein.lemonademod.proxy.CommonProxy;
 
 import java.util.Objects;
@@ -25,6 +24,9 @@ public class LemonadeMod {
     private static Logger logger;
 
     public static final String modId = "lemonademod";
+
+    private static final Potion POTION_LEMONADE = new PotionLemonade();
+    private static final PotionType POTION_TYPE_LEMONADE = new PotionType("lemonade", new PotionEffect(POTION_LEMONADE));
 
     @Mod.Instance(modId)
     public static LemonadeMod instance;
@@ -57,17 +59,14 @@ public class LemonadeMod {
         @SubscribeEvent
         public static void registerPotions(RegistryEvent.Register<Potion> event) {
             logger.info("Registering potions");
-            Potion lemon = new PotionLemon().setPotionName("Lemonade")
-                    .setRegistryName("lemonade");
-            event.getRegistry().register(lemon);
+            event.getRegistry().register(POTION_LEMONADE.setRegistryName("lemonade"));
         }
 
         @SubscribeEvent
         public static void registerPotionTypes(RegistryEvent.Register<PotionType> event) {
             logger.info("Registering potion types");
-            PotionType lemonade = new PotionTypeLemonade().setRegistryName("lemonade");
-            event.getRegistry().register(lemonade);
+            // PotionType lemonade = new PotionTypeLemonade().setRegistryName("lemonade");
+            event.getRegistry().register(POTION_TYPE_LEMONADE.setRegistryName("lemonade"));
         }
-
     }
 }

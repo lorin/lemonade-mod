@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
 import org.lorinhochstein.lemonademod.item.ItemLemonade;
-import org.lorinhochstein.lemonademod.proxy.BaseProxy;
+import org.lorinhochstein.lemonademod.proxy.Proxy;
 
 
 import static org.lorinhochstein.lemonademod.LemonadeMod.modId;
@@ -25,7 +25,7 @@ public class LemonadeMod {
     public static LemonadeMod instance;
 
     @SidedProxy(serverSide="org.lorinhochstein.lemonademod.proxy.ServerProxy", clientSide="org.lorinhochstein.lemonademod.proxy.ClientProxy")
-    public static BaseProxy proxy;
+    public static Proxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {

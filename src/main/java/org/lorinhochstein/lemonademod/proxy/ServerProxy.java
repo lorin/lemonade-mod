@@ -1,4 +1,4 @@
 package org.lorinhochstein.lemonademod.proxy;
 
-public class ServerProxy extends BaseProxy {
+public class ServerProxy implements BaseProxy {
 }

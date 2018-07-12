@@ -19,8 +19,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 public class ItemLemonade extends Item {
 
@@ -55,35 +56,39 @@ public class ItemLemonade extends Item {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
-        EntityPlayer entityplayer = entityLiving instanceof EntityPlayer ? (EntityPlayer)entityLiving : null;
+        Optional<EntityPlayer> entityPlayer = downcast(entityLiving);
 
-        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode) {
+        boolean shouldShrinkStack = entityPlayer.map(x -> !x.capabilities.isCreativeMode).orElse(true);
+
+        if(shouldShrinkStack) {
             stack.shrink(1);
         }
 
-        if (entityplayer instanceof EntityPlayerMP) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
-        }
+        entityPlayer.flatMap(this::downcast)
+            .ifPresent(mp -> CriteriaTriggers.CONSUME_ITEM.trigger(mp, stack));
 
-
-        if (!worldIn.isRemote) {
+        if(!worldIn.isRemote) {
             entityLiving.heal(halfHeartsHealed);
         }
 
-        if (entityplayer != null) {
-            entityplayer.addStat(requireNonNull(StatList.getObjectUseStats(this)));
-        }
+        entityPlayer.ifPresent(ep->ep.addStat(requireNonNull(StatList.getObjectUseStats(this))));
 
-        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode) {
-            if (stack.isEmpty()) {
+        if(shouldShrinkStack) {
+            if(stack.isEmpty()) {
                 return new ItemStack(Items.GLASS_BOTTLE);
             }
 
-            if (entityplayer != null) {
-                entityplayer.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-            }
+            entityPlayer.ifPresent(ep->ep.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE)));
         }
 
         return stack;
+    }
+
+    Optional<EntityPlayer> downcast(EntityLivingBase entityLiving) {
+        return entityLiving instanceof EntityPlayer ? Optional.of((EntityPlayer)entityLiving) : Optional.empty();
+    }
+
+    Optional<EntityPlayerMP> downcast(EntityPlayer entityPlayer) {
+        return entityPlayer instanceof  EntityPlayerMP ? Optional.of((EntityPlayerMP)entityPlayer) : Optional.empty();
     }
 }

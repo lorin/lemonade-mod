@@ -13,6 +13,7 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,12 +21,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
+import static java.lang.Integer.min;
 import static java.util.Objects.requireNonNull;
 
 public class ItemLemonade extends Item {
 
-    static final int halfHeartsHealed = 2;
+    static final int MAX_FOOD_LEVEL = 20;
+    static final int FOOD_LEVEL_INCREASE = 4;
 
     /**
      * This method needs to be overridden because otherwise the duration is too short,
@@ -67,8 +72,12 @@ public class ItemLemonade extends Item {
         entityPlayer.flatMap(this::downcast)
             .ifPresent(mp -> CriteriaTriggers.CONSUME_ITEM.trigger(mp, stack));
 
+        Function<FoodStats, Integer> newFoodLevel = food -> min(food.getFoodLevel()+FOOD_LEVEL_INCREASE, MAX_FOOD_LEVEL);
+        Consumer<FoodStats> updateFoodLevel = food -> food.setFoodLevel(newFoodLevel.apply(food));
+
         if(!worldIn.isRemote) {
-            entityLiving.heal(halfHeartsHealed);
+            entityPlayer.map(EntityPlayer::getFoodStats)
+                    .ifPresent(updateFoodLevel);
         }
 
         entityPlayer.ifPresent(ep->ep.addStat(requireNonNull(StatList.getObjectUseStats(this))));

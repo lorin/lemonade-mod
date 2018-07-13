@@ -70,7 +70,7 @@ public class ItemLemonade extends Item {
         }
 
         entityPlayer.flatMap(this::downcast)
-            .ifPresent(mp -> CriteriaTriggers.CONSUME_ITEM.trigger(mp, stack));
+                .ifPresent(mp -> CriteriaTriggers.CONSUME_ITEM.trigger(mp, stack));
 
         Function<FoodStats, Integer> newFoodLevel = food -> min(food.getFoodLevel()+FOOD_LEVEL_INCREASE, MAX_FOOD_LEVEL);
         Consumer<FoodStats> updateFoodLevel = food -> food.setFoodLevel(newFoodLevel.apply(food));

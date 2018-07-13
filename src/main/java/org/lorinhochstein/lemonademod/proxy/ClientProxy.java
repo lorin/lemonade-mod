@@ -7,7 +7,7 @@ import org.lorinhochstein.lemonademod.LemonadeMod;
 
 public class ClientProxy implements Proxy {
     @Override
-    public void registerItemRenderer(Item item, int meta, String id) {
-        ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(LemonadeMod.modId + ":" + id, "inventory"));
+    public void setCustomModelResourceLocation(Item item, String id) {
+        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(LemonadeMod.modId + ":" + id, "inventory"));
     }
 }

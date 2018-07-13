@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
+import org.lorinhochstein.lemonademod.item.ItemLemon;
 import org.lorinhochstein.lemonademod.item.ItemLemonade;
 import org.lorinhochstein.lemonademod.proxy.Proxy;
 
@@ -19,7 +20,6 @@ public class LemonadeMod {
     private static Logger logger;
 
     public static final String modId = "lemonademod";
-
 
     @Mod.Instance(modId)
     public static LemonadeMod instance;
@@ -44,8 +44,14 @@ public class LemonadeMod {
                             .setCreativeTab(CreativeTabs.BREWING);
 
             event.getRegistry().register(lemonade);
+            proxy.setCustomModelResourceLocation(lemonade, "lemonade");
 
-            proxy.registerItemRenderer(lemonade, 0, "lemonade");
+            Item lemon = new ItemLemon()
+                    .setUnlocalizedName("lemon")
+                    .setRegistryName("lemon")
+                    .setCreativeTab(CreativeTabs.FOOD);
+            event.getRegistry().register(lemon);
+            proxy.setCustomModelResourceLocation(lemon, "lemon");
         }
     }
 }

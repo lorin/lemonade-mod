@@ -27,6 +27,6 @@ public class Functions {
     }
 
     static Optional<EntityPlayerMP> downcast(EntityPlayer entityPlayer) {
-        return entityPlayer instanceof  EntityPlayerMP ? Optional.of((EntityPlayerMP)entityPlayer) : Optional.empty();
+        return entityPlayer instanceof EntityPlayerMP ? Optional.of((EntityPlayerMP)entityPlayer) : Optional.empty();
     }
 }

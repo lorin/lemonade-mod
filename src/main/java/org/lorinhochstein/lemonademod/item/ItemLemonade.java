@@ -4,7 +4,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -13,7 +12,6 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.FoodStats;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,15 +19,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
-import static java.lang.Integer.min;
 import static java.util.Objects.requireNonNull;
+import static org.lorinhochstein.lemonademod.item.Functions.downcast;
+import static org.lorinhochstein.lemonademod.item.Functions.updateFoodLevel;
 
 public class ItemLemonade extends Item {
 
-    static final int MAX_FOOD_LEVEL = 20;
     static final int FOOD_LEVEL_INCREASE = 4;
 
     /**
@@ -69,15 +65,12 @@ public class ItemLemonade extends Item {
             stack.shrink(1);
         }
 
-        entityPlayer.flatMap(this::downcast)
+        entityPlayer.flatMap(Functions::downcast)
                 .ifPresent(mp -> CriteriaTriggers.CONSUME_ITEM.trigger(mp, stack));
-
-        Function<FoodStats, Integer> newFoodLevel = food -> min(food.getFoodLevel()+FOOD_LEVEL_INCREASE, MAX_FOOD_LEVEL);
-        Consumer<FoodStats> updateFoodLevel = food -> food.setFoodLevel(newFoodLevel.apply(food));
 
         if(!worldIn.isRemote) {
             entityPlayer.map(EntityPlayer::getFoodStats)
-                    .ifPresent(updateFoodLevel);
+                    .ifPresent(updateFoodLevel(FOOD_LEVEL_INCREASE));
         }
 
         entityPlayer.ifPresent(ep->ep.addStat(requireNonNull(StatList.getObjectUseStats(this))));
@@ -91,13 +84,5 @@ public class ItemLemonade extends Item {
         }
 
         return stack;
-    }
-
-    Optional<EntityPlayer> downcast(EntityLivingBase entityLiving) {
-        return entityLiving instanceof EntityPlayer ? Optional.of((EntityPlayer)entityLiving) : Optional.empty();
-    }
-
-    Optional<EntityPlayerMP> downcast(EntityPlayer entityPlayer) {
-        return entityPlayer instanceof  EntityPlayerMP ? Optional.of((EntityPlayerMP)entityPlayer) : Optional.empty();
     }
 }

@@ -1,0 +1,10 @@
+{
+    "type": "crafting_shapeless",
+    "ingredients": [
+        "item": "lemonade:grape_vineyard"
+    ],
+    "result": {
+        "item": "lemonade:grape",
+        "count":12
+    }
+}

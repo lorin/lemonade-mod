@@ -28,7 +28,14 @@ public class LemonadeMod {
 
 
     static final List<FruitInfo> fruits = asList(
-            new FruitInfo("lemon", 2)
+            new FruitInfo("lemon", 2),
+            new FruitInfo("strawberry", 1),
+            new FruitInfo("lime", 2),
+            new FruitInfo("grape", 1),
+            new FruitInfo("blueberry", 1),
+            new FruitInfo("raspberry", 1),
+            new FruitInfo("orange", 1),
+            new FruitInfo("peach", 1)
     );
 
     @Mod.Instance(modId)

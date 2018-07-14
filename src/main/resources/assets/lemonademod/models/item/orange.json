@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "lemonademod:items/orange.json"
+        "layer0": "lemonademod:items/orange"
     }
 }

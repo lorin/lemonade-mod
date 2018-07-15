@@ -55,16 +55,24 @@ public class LemonadeMod {
         @SubscribeEvent
         public static void registerItems(RegistryEvent.Register<Item> event) {
             logger.info("Registering items");
+            IForgeRegistry<Item> registry = event.getRegistry();
             Item lemonade = new ItemLemonade()
                             .setUnlocalizedName("lemonade")
                             .setRegistryName("lemonade")
                             .setCreativeTab(CreativeTabs.BREWING);
 
-            event.getRegistry().register(lemonade);
+            registry.register(lemonade);
             proxy.setCustomModelResourceLocation(lemonade, "lemonade");
 
-            Consumer<FruitInfo> registerFruit = fruitInfo -> registerFruitInfo(fruitInfo, event.getRegistry());
+            Consumer<FruitInfo> registerFruit = fruitInfo -> registerFruitInfo(fruitInfo, registry);
             fruits.forEach(registerFruit);
+
+            Item grapevine = new Item()
+                    .setUnlocalizedName("grapevine")
+                    .setRegistryName("grapevine")
+                    .setCreativeTab(CreativeTabs.DECORATIONS);
+            registry.register(grapevine);
+            proxy.setCustomModelResourceLocation(grapevine, "grapevine");
         }
 
         static void registerFruitInfo(FruitInfo fruitInfo, IForgeRegistry<Item> registry) {
